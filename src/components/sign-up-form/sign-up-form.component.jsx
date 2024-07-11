@@ -3,9 +3,9 @@ import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
+import Button from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
 import "./sing-up-form.styles.scss";
-import Button from "../button/button.component";
 
 const SignUpForm = () => {
   const defaultFormFields = {
@@ -92,7 +92,7 @@ const SignUpForm = () => {
           name="confirmPassword"
           value={confirmPassword}
         />
-        <Button buttonType={'google'} type="submit">SUBMIT</Button>
+        <Button buttonType={''} type="submit">SUBMIT</Button>
       </form>
     </div>
   );
