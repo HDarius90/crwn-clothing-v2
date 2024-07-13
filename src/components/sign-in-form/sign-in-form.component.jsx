@@ -1,20 +1,27 @@
-import { useState } from "react";
+import { useState, useContext } from 'react';
+
+import Button from '../button/button.component';
+import FormInput from '../form-input/form-input.component';
+
+import { UserContext } from '../../contexts/user.context';
+
 import {
   createUserDocumentFromAuth,
   signInAuthUserWithEmailAndPassword,
   signInWithGooglePopup,
-} from "../../utils/firebase/firebase.utils";
-import Button from "../button/button.component";
-import FormInput from "../form-input/form-input.component";
-import "./sign-in-form.styles.scss";
+} from '../../utils/firebase/firebase.utils';
+
+import './sign-in-form.styles.scss';
 
 const SignInForm = () => {
   const defaultFormFields = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   };
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
+
+  const { setCurrentUser } = useContext(UserContext);
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -31,15 +38,16 @@ const SignInForm = () => {
     const { email, password } = formFields;
 
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
+      const { user } = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
-      console.log(response);
+      setCurrentUser(user);
+
       resetFormFields();
     } catch (error) {
-      if (error.code === "auth/invalid-credential") {
-        alert("Invalid email or password");
+      if (error.code === 'auth/invalid-credential') {
+        alert('Invalid email or password');
       } else {
         console.log(error.code, error.message);
       }
@@ -57,7 +65,7 @@ const SignInForm = () => {
       <span>Sign in with your email and password</span>
       <form onSubmit={handleSubmit}>
         <FormInput
-          label={"Email"}
+          label={'Email'}
           type="email"
           required
           onChange={handleChange}
@@ -65,7 +73,7 @@ const SignInForm = () => {
           value={email}
         />
         <FormInput
-          label={"Password"}
+          label={'Password'}
           type="password"
           required
           onChange={handleChange}
@@ -75,7 +83,7 @@ const SignInForm = () => {
 
         <div className="buttons-container">
           <Button type="submit">Sign-In</Button>
-          <Button buttonType={"google"} onClick={signInWithGoogle}>
+          <Button buttonType={'google'} onClick={signInWithGoogle}>
             Google Sign In
           </Button>
         </div>
