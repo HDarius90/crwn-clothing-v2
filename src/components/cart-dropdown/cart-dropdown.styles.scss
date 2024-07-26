@@ -25,5 +25,11 @@
 
   button {
     margin-top: auto;
+    a {
+     color: white;
+     &:hover {
+      color: black;
+    }
+    }
   }
 }
