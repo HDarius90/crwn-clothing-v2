@@ -9,6 +9,7 @@ import {
   googleSignInStart,
   emailSignInStart,
 } from '../../store/user/user.action';
+import { useNavigate } from 'react-router-dom';
 
 const defaultFormFields = {
   email: '',
@@ -17,6 +18,7 @@ const defaultFormFields = {
 
 const SignInForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
@@ -25,13 +27,13 @@ const SignInForm = () => {
   };
 
   const signInWithGoogle = () => {
-    dispatch(googleSignInStart());
+    dispatch(googleSignInStart(navigate));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      dispatch(emailSignInStart(email, password));
+      dispatch(emailSignInStart(email, password, navigate));
       resetFormFields();
     } catch (error) {
       console.log('user sign in failed', error);

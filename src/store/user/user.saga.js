@@ -33,16 +33,17 @@ export function* getSnapshotFromUserAuth(userAuth, additionalDetails) {
   }
 }
 
-export function* signInWithGoogle() {
+export function* signInWithGoogle({ payload: { navigate } }) {
   try {
     const { user } = yield call(signInWithGooglePopup);
     yield call(getSnapshotFromUserAuth, user);
+    navigate('/');
   } catch (error) {
     yield put(signInFailed(error));
   }
 }
 
-export function* signInWithEmail({ payload: { email, password } }) {
+export function* signInWithEmail({ payload: { email, password, navigate } }) {
   try {
     if (!email || !password) return 'Email or password is missing';
     const { user } = yield call(
@@ -51,6 +52,7 @@ export function* signInWithEmail({ payload: { email, password } }) {
       password
     );
     yield call(getSnapshotFromUserAuth, user);
+    navigate('/');
   } catch (error) {
     yield put(signInFailed(error));
   }
@@ -66,7 +68,9 @@ export function* isUserAuthenticated() {
   }
 }
 
-export function* signUp({ payload: { email, password, displayName } }) {
+export function* signUp({
+  payload: { email, password, displayName, navigate },
+}) {
   try {
     const { user } = yield call(
       createAuthUserWithEmailAndPassword,
@@ -75,6 +79,7 @@ export function* signUp({ payload: { email, password, displayName } }) {
     );
     yield put(signUpSuccess(user, { displayName }));
     yield call(createUserDocumentFromAuth, user, { displayName });
+    navigate('/');
   } catch (error) {
     yield put(signUpFailed(error));
   }

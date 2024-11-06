@@ -6,6 +6,7 @@ import Button from '../button/button.component';
 
 import { SignUpContainer } from './sing-up-form.styles';
 import { signUpStart } from '../../store/user/user.action';
+import { useNavigate } from 'react-router-dom';
 
 const defaultFormFields = {
   displayName: '',
@@ -16,6 +17,7 @@ const defaultFormFields = {
 
 const SignUpForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
@@ -32,7 +34,7 @@ const SignUpForm = () => {
     }
 
     try {
-      dispatch(signUpStart(email, password, displayName));
+      dispatch(signUpStart(email, password, displayName, navigate));
       resetFormFields();
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
