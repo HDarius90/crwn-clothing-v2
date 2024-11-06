@@ -11,6 +11,7 @@ import {
   PaymentFormContainer,
   FormContainer,
   PaymentButton,
+  CardElementContainer,
 } from './payment-form.styles';
 
 const PaymentForm = () => {
@@ -65,7 +66,9 @@ const PaymentForm = () => {
     <PaymentFormContainer>
       <FormContainer onSubmit={paymentHandler}>
         <h2>Credit Card Payment: </h2>
-        <CardElement />
+        <CardElementContainer>
+          <CardElement />
+        </CardElementContainer>
         <PaymentButton
           isLoading={isProcessingPayment}
           buttonType={BUTTON_TYPE_CLASSES.inverted}
