@@ -1,9 +1,11 @@
+import { User } from 'firebase/auth';
 import { USER_ACTION_TYPES } from './user.types';
+
 import {
-  Action,
-  ActionWithPayload,
   createAction,
   withMatcher,
+  Action,
+  ActionWithPayload,
 } from '../../utils/reducer/reducer.utils';
 import {
   UserData,
@@ -20,7 +22,7 @@ export type SetCurrentUser = ActionWithPayload<
 
 export type GoogleSignInStart = ActionWithPayload<
   USER_ACTION_TYPES.GOOGLE_SIGN_IN_START,
-  NavigateFunction
+  { navigate: NavigateFunction }
 >;
 
 export type SignUpStart = ActionWithPayload<
@@ -50,7 +52,7 @@ export type SignInFailed = ActionWithPayload<
 
 export type SignUpSuccess = ActionWithPayload<
   USER_ACTION_TYPES.SIGN_UP_SUCCESS,
-  { user: UserData; additionalDetails: AdditionalInformation }
+  { user: User; additionalDetails: AdditionalInformation }
 >;
 
 export type SignUpFailed = ActionWithPayload<
@@ -78,7 +80,7 @@ export const setCurrentUser = withMatcher(
 
 export const googleSignInStart = withMatcher(
   (navigate: NavigateFunction): GoogleSignInStart =>
-    createAction(USER_ACTION_TYPES.GOOGLE_SIGN_IN_START, navigate)
+    createAction(USER_ACTION_TYPES.GOOGLE_SIGN_IN_START, { navigate })
 );
 
 export const emailSignInStart = withMatcher(
@@ -95,7 +97,7 @@ export const emailSignInStart = withMatcher(
 );
 
 export const signInSuccess = withMatcher(
-  (user: UserData): SignInSuccess =>
+  (user: UserData & { id: string }): SignInSuccess =>
     createAction(USER_ACTION_TYPES.SIGN_IN_SUCCESS, user)
 );
 
@@ -120,7 +122,7 @@ export const signUpStart = withMatcher(
 );
 
 export const signUpSuccess = (
-  user: UserData,
+  user: User,
   additionalDetails: AdditionalInformation
 ): SignUpSuccess =>
   createAction(USER_ACTION_TYPES.SIGN_UP_SUCCESS, { user, additionalDetails });
