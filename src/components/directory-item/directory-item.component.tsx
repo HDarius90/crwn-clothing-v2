@@ -5,8 +5,16 @@ import {
   Body,
   DirectoryItemContainer,
 } from './directory-item.styles.jsx';
+import { FC } from 'react';
+import { Category } from '../../store/categories/category.types.js';
 
-const DirectoryItem = ({ category }) => {
+type DirectoryItemProps = {
+  category: Category & {
+    route: string;
+  };
+};
+
+const DirectoryItem: FC<DirectoryItemProps> = ({ category }) => {
   const { imageUrl, title, route } = category;
   const navigate = useNavigate();
 
