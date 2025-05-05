@@ -1,7 +1,6 @@
 import { screen } from '@testing-library/react';
 import { renderWithProviders } from '../../../utils/test/test.utils';
 import Navigation from '../navigation.component';
-import { redirectDocument } from 'react-router-dom';
 
 describe('Navigation tests', () => {
   test('It should render a Sign In Link and not Sign Out Link if there is no currentUser', () => {
