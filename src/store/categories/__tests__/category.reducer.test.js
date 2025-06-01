@@ -39,6 +39,7 @@ describe('Catregory reducer tests', () => {
         ],
       },
     ];
+    
     const expectedState = {
       ...CATEGORIES_INITIAL_STATE,
       isLoading: false,
